@@ -17,12 +17,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  /* GET users
-     POST users
-     GET users/:id
-     DELETE users/:id
-     PATCH users/:id
-  */
   @Get()
   findAll(@Query('role') role?: 'ADMIN' | 'USER') {
     return this.usersService.findAll(role);
