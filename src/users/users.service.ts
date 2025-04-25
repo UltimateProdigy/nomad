@@ -7,14 +7,7 @@ import { DatabaseService } from 'src/database/database.service';
 export class UsersService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  findAll(role?: 'USER' | 'ADMIN') {
-    if (role) {
-      return this.databaseService.user.findMany({
-        where: {
-          role: role,
-        },
-      });
-    }
+  findAll() {
     return this.databaseService.user.findMany();
   }
 

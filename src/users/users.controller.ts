@@ -25,9 +25,9 @@ export class UsersController {
     return this.usersService.create(user);
   }
   @Get()
-  findAll(@Ip() ip: string, @Query('role') role?: 'USER' | 'ADMIN') {
+  findAll(@Ip() ip: string) {
     this.logger.log(`Request for all Users\t${ip}`, UsersController.name);
-    return this.usersService.findAll(role);
+    return this.usersService.findAll();
   }
 
   @Patch(':id')

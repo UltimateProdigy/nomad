@@ -19,19 +19,14 @@ model User {
   email       String   @unique
   name        String
   username    String
+  password    String
   description String
   verified    Boolean? @default(false)
   followers   Int?
   following   Int?
-  role        Role
   posts       Post[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-}
-
-enum Role {
-  ADMIN
-  USER
 }
 
 model Post {
