@@ -15,13 +15,18 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String
-  role      Role
-  posts     Post[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  name        String
+  username    String
+  description String
+  verified    Boolean? @default(false)
+  followers   Int?
+  following   Int?
+  role        Role
+  posts       Post[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum Role {
