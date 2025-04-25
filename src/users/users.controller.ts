@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Patch,
 } from '@nestjs/common';
+import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from 'generated/prisma';
