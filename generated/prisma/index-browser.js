@@ -127,6 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   verified: 'verified',
   followers: 'followers',
   following: 'following',
+  display_picture: 'display_picture',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -135,6 +136,7 @@ exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
+  image: 'image',
   published: 'published',
   authorId: 'authorId'
 };
