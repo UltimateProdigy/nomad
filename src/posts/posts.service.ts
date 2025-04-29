@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -30,14 +30,14 @@ export class PostsService {
         },
       })
       .then((result) => {
-        if (!result) throw new NotFoundException('User does not exist');
+        if (!result) return null;
         const { authorId, published, ...rest } = result;
         return rest;
       });
 
     if (!post)
       return {
-        message: 'Post ID not found',
+        message: 'Post does not exist',
       };
 
     return {
