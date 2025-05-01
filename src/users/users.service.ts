@@ -21,7 +21,7 @@ export class UsersService {
       })
       .then((result) => {
         if (!result) throw new NotFoundException('User does not exist');
-        const { password, createdAt, updatedAt, ...rest } = result;
+        const { password, updatedAt, ...rest } = result;
         return rest;
       });
 

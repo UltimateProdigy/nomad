@@ -22,6 +22,73 @@ export class PostsService {
     return this.databaseService.post.findMany();
   }
 
+  async likePost(postId: number, userId: number) {
+    const existingLike = await this.databaseService.like.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
+    });
+
+    if (existingLike) {
+      return { message: 'Post already liked' };
+    }
+
+    return this.databaseService.$transaction([
+      this.databaseService.like.create({
+        data: {
+          user: { connect: { id: userId } },
+          post: { connect: { id: postId } },
+        },
+      }),
+      this.databaseService.post.update({
+        where: { id: postId },
+        data: { likeCount: { increment: 1 } },
+      }),
+    ]);
+  }
+
+  async dislikePost(postId: number, userId: number) {
+    const existingLike = await this.databaseService.like.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
+    });
+
+    if (!existingLike) {
+      return { message: 'Post not liked yet' };
+    }
+
+    return this.databaseService.$transaction([
+      this.databaseService.like.delete({
+        where: {
+          userId_postId: {
+            userId,
+            postId,
+          },
+        },
+      }),
+      this.databaseService.post.update({
+        where: { id: postId },
+        data: { likeCount: { decrement: 1 } },
+      }),
+    ]);
+  }
+
+  async getPostLikes(postId: number) {
+    const post = this.databaseService.post.findUnique({
+      where: { id: postId },
+      select: { likeCount: true },
+    });
+
+    return { likes: post?.likeCount || 0 };
+  }
+
   async findOne(id: number) {
     const post = await this.databaseService.post
       .findUnique({
