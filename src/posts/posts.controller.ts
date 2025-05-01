@@ -9,6 +9,7 @@ import {
   Req,
   Query,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { Prisma } from 'generated/prisma';
@@ -32,6 +33,29 @@ export class PostsController {
         },
       },
     });
+  }
+
+  @Post(':id/like')
+  @UseGuards(JwtAuthGuard)
+  async likePost(
+    @Param('id', ParseIntPipe) postId: number,
+    @Req() req: Request & { user: { id: number } },
+  ) {
+    return this.postsService.likePost(postId, req.user.id);
+  }
+
+  @Post(':id/dislike')
+  @UseGuards(JwtAuthGuard)
+  async dislikePost(
+    @Param('id', ParseIntPipe) postId: number,
+    @Req() req: Request & { user: { id: number } },
+  ) {
+    return this.postsService.dislikePost(postId, req.user.id);
+  }
+
+  @Get(':id/likes')
+  async getLikes(@Param('id', ParseIntPipe) postId: number) {
+    return this.postsService.getPostLikes(postId);
   }
 
   @Get()
