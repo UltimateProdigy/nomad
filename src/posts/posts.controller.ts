@@ -54,6 +54,7 @@ export class PostsController {
   }
 
   @Get(':id/likes')
+  @UseGuards(JwtAuthGuard)
   async getLikes(@Param('id', ParseIntPipe) postId: number) {
     return this.postsService.getPostLikes(postId);
   }

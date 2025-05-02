@@ -93,13 +93,12 @@ export class PostsService {
     const post = await this.databaseService.post
       .findUnique({
         where: {
-          id: id,
+          id,
         },
       })
       .then((result) => {
         if (!result) return null;
-        const { authorId, published, ...rest } = result;
-        return rest;
+        return result;
       });
 
     if (!post)

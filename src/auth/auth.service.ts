@@ -8,12 +8,12 @@ import { DatabaseService } from 'src/database/database.service';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly databaseServce: DatabaseService,
+    private readonly databaseService: DatabaseService,
     private jwtService: JwtService,
   ) {}
 
   async validateUser(email: string, pass: string) {
-    const user = await this.databaseServce.user.findUnique({
+    const user = await this.databaseService.user.findUnique({
       where: { email },
     });
     if (!user) return null;
@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   async register(registerDto: Prisma.UserCreateInput) {
-    const existingUser = await this.databaseServce.user.findUnique({
+    const existingUser = await this.databaseService.user.findUnique({
       where: { email: registerDto.email },
     });
     if (existingUser) {
@@ -47,7 +47,7 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(registerDto.password, 10);
 
-    const user = await this.databaseServce.user.create({
+    const user = await this.databaseService.user.create({
       data: {
         email: registerDto.email,
         password: hashedPassword,
